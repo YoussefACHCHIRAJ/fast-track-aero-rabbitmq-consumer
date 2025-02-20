@@ -4,14 +4,14 @@ const admin = require("firebase-admin");
 
 dotenv.config();
 
-const fireBaseAdminSdkKeyPath = process.env.FIREBASE_ADMIN_SDK_KEY_PATH;
+const fireBaseAdminSdkKeyBase64 = process.env.FIREBASE_ADMIN_SDK_KEY_BASE64;
 
-const serviceAccount = JSON.parse(
-  fs.readFileSync(fireBaseAdminSdkKeyPath, "utf-8")
+const firebaseCredentials = JSON.parse(
+  Buffer.from(fireBaseAdminSdkKeyBase64, "base64").toString("utf-8")
 );
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(firebaseCredentials),
 });
 
 module.exports = admin;

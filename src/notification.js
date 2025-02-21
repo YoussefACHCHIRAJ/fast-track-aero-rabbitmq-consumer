@@ -1,19 +1,20 @@
 const admin = require("../config/firebase");
 
-async function sendPushNotification(notification) {
-  if (!notification.target || !notification.notification) {
+async function sendPushNotification(payload) {
+  if (!payload.target || !payload.notification) {
     throw new Error("Invalid notification structure");
   }
 
   const message = {
     notification: {
-      title: notification.notification.title,
-      body: notification.notification.body,
+      title: payload.notification.title,
+      body: payload.notification.body,
     },
     data: {
-      foreground: "Handle the message on the foreground",
+      title: payload.notification.title,
+      body: payload.notification.body,
     },
-    topic: notification.target.value,
+    topic: payload.target.value,
   };
 
   await admin.messaging().send(message);

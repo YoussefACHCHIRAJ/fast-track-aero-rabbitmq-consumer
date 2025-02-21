@@ -10,10 +10,11 @@ async function sendPushNotification(notification) {
       title: notification.notification.title,
       body: notification.notification.body,
     },
+    data: {
+      foreground: "Handle the message on the foreground",
+    },
     topic: notification.target.value,
   };
-
-  console.log("🚀 Sending push notification:", message);
 
   await admin.messaging().send(message);
   console.log("✅ Push notification sent successfully!");
